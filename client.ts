@@ -253,7 +253,7 @@ export class LanguageClient {
       // Ensure we have a connection before we force the document sync.
       const connection = await this.$start();
       // await this.forceDocumentSync();
-      return await connection.sendRequest<R>(type, ...params);
+        return await connection.sendRequest<R>(Is.string(type) ? type : type.method, ...params);
     } catch (error) {
       this.error(`Sending request ${Is.string(type) ? type : type.method} failed.`, error);
       throw error;
@@ -274,7 +274,7 @@ export class LanguageClient {
     try {
       // Ensure we have a connection before we force the document sync.
       const connection = await this.$start();
-      return await connection.sendNotification(type, params);
+        return await connection.sendNotification(Is.string(type) ? type : type.method, params);
     } catch (error) {
       this.error(`Sending notification ${Is.string(type) ? type : type.method} failed.`, error);
       throw error;

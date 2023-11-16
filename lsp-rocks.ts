@@ -87,34 +87,38 @@ export class LspRocks {
   }
 
   public async messageHandler(socket: WebSocket, msg: Message) {
-    const { id, cmd } = msg;
-    console.log(`receive message => id: ${msg.id}, cmd: ${msg.cmd}, params: ${JSON.stringify((msg as any).params)}`);
-    const logLabel = `${id}:${cmd}`;
-    console.time(logLabel)
-    if (Message.isResponse(msg)) {
-      // TODO
-    } else {
-      const req = msg as RequestMessage;
-      let data: any = null;
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const client = await this.ensureClient(socket.id!, req.params);
+     try {
+          const { id, cmd } = msg;
+          console.log(`receive message => id: ${msg.id}, cmd: ${msg.cmd}, params: ${JSON.stringify((msg as any).params)}`);
+          const logLabel = `${id}:${cmd}`;
+          console.time(logLabel)
+          if (Message.isResponse(msg)) {
+              // TODO
+          } else {
+              const req = msg as RequestMessage;
+              let data: any = null;
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              const client = await this.ensureClient(socket.id!, req.params);
 
-      if (req.cmd == ServerCommand.Init) {
-        return;
-      }
+              if (req.cmd == ServerCommand.Init) {
+                  return;
+              }
 
-      if (this._recentRequests.get(req.cmd) != req.id && req.cmd != 'textDocument/didChange') {
-        return;
-      }
-      data = await client.on(req.cmd, req.params);
-      if (this._recentRequests.get(req.cmd) != req.id) {
-        return;
-      }
-      console.timeLog(logLabel)
-      if (data != null) {
-        socket.send(mkres(id, cmd, data));
-      }
-    }
+              if (this._recentRequests.get(req.cmd) != req.id && req.cmd != 'textDocument/didChange') {
+                  return;
+              }
+              data = await client.on(req.cmd, req.params);
+              if (this._recentRequests.get(req.cmd) != req.id) {
+                  return;
+              }
+              console.timeLog(logLabel)
+              if (data != null) {
+                  socket.send(mkres(id, cmd, data));
+              }
+          }
+     } catch (err) {
+         console.error(err);
+     }
 
   }
 
