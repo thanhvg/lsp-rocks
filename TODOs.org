@@ -1,0 +1,65 @@
+:PROPERTIES:
+:CATEGORY: lsp-rocks
+:END:
+* install
+#+begin_src elisp
+(use-package lsp-rocks
+  :load-path "~/git/lsp-rocks")
+#+end_src
+
+#+RESULTS:
+: t
+
+fix ts error
+npm build
+
+chmod +x ./lib/cli.js
+reate a py file, switch to python-mode from ts
+enable lsp-rock mode
+
+error 
+#+begin_src 
+
+receive message => id: ekuzbwon, cmd: init, params: {"project":"/home/thanh/git/lsp-rocks/","language":"python","command":"pyright-langserver","args":["--stdio"],"clientInfo":{"name":"Emacs","version":"GNU Emacs 29.1.50 (build 2, x86_64-pc-linux-gnu, GTK+ Version 3.24.33, cairo version 1.16.0)\n of 2023-08-10"}}
+[Error  - 9:58:39 p.m.] /home/thanh/git/lsp-rocks/:python client: couldn't create connection to server.
+node:internal/process/promises:279
+            triggerUncaughtException(err, true /* fromPromise */);
+            ^
+
+[UnhandledPromiseRejection: This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). The promise rejected with the reason "Launching server using command pyright-langserver failed. Error: spawn pyright-langserver ENOENT".] {
+  code: 'ERR_UNHANDLED_REJECTION'
+}
+
+Process *lsp-rocks* exited abnormally with code 1
+#+end_src
+
+#+begin_src
+receive message => id: t9zlyr9k, cmd: init, params: {"project":"/home/thanh/git/lsp-rocks/","language":"python","command":"pyright-langserver","args":["--stdio"],"clientInfo":{"name":"Emacs","version":"GNU Emacs 29.1.50 (build 2, x86_64-pc-linux-gnu, GTK+ Version 3.24.33, cairo version 1.16.0)\n of 2023-08-10"}}
+[Error  - 9:50:35 p.m.] /home/thanh/git/lsp-rocks/:python client: couldn't create connection to server.
+Launching server using command pyright-langserver failed. Error: spawn pyright-langserver ENOENT
+receive message => id: 0yd0y93g, cmd: textDocument/didOpen, params: {"textDocument":{"uri":"file:///home/thanh/git/lsp-rocks/foo.py","languageId":"python","version":0,"text":"print(\"hello\")\n\ndef foo(x, y):\n    return x + y\n\nfoo(2, 3)\n\n"}}
+ResponseError: Client is not running
+    at LanguageClient.sendNotification (/home/thanh/git/lsp-rocks/lib/client.js:141:35)
+    at DidOpenTextDocumentFeature.runWith (/home/thanh/git/lsp-rocks/lib/features/textSynchronization.js:15:28)
+    at DidOpenTextDocumentFeature.run (/home/thanh/git/lsp-rocks/lib/features/features.js:28:21)
+    at LanguageClient.on (/home/thanh/git/lsp-rocks/lib/client.js:425:50)
+    at LspRocks.messageHandler (/home/thanh/git/lsp-rocks/lib/lsp-rocks.js:70:37)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async WebSocket.<anonymous> (/home/thanh/git/lsp-rocks/lib/lsp-rocks.js:43:17) {
+  code: -32096,
+  data: undefined
+}
+receive message => id: mkvbs6g9, cmd: textDocument/didClose, params: {"textDocument":{"uri":"file:///home/thanh/git/lsp-rocks/foo.py"}}
+ResponseError: Client is not running
+    at LanguageClient.sendNotification (/home/thanh/git/lsp-rocks/lib/client.js:141:35)
+    at DidCloseTextDocumentFeature.runWith (/home/thanh/git/lsp-rocks/lib/features/textSynchronization.js:31:28)
+    at DidCloseTextDocumentFeature.run (/home/thanh/git/lsp-rocks/lib/features/features.js:28:21)
+    at LanguageClient.on (/home/thanh/git/lsp-rocks/lib/client.js:425:50)
+    at LspRocks.messageHandler (/home/thanh/git/lsp-rocks/lib/lsp-rocks.js:70:37)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async WebSocket.<anonymous> (/home/thanh/git/lsp-rocks/lib/lsp-rocks.js:43:17) {
+  code: -32096,
+  data: undefined
+}
+#+end_src
+* interact with the websocket ts client

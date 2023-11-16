@@ -1,0 +1,4 @@
+#s(hash-table size 65 test equal rehash-size 1.5 rehash-threshold 0.8125 data ("lsp-rocks.ts" #s(virtual-comment-buffer-data "lsp-rocks.ts" (#s(virtual-comment-unit 3627 "error" "        await client.start();
+"))) "lsp-rocks.el" #s(virtual-comment-buffer-data "lsp-rocks.el" (#s(virtual-comment-unit 34134 "store request id" "      (puthash cmd id lsp-rocks--recent-requests)
+"))) "client.ts" #s(virtual-comment-buffer-data "client.ts" (#s(virtual-comment-unit 11084 "error" "      this.error(`${this._name} client: couldn't create connection to server.`, error);
+")))))
