@@ -1,4 +1,7 @@
 #s(hash-table size 65 test equal rehash-size 1.5 rehash-threshold 0.8125 data ("lsp-rocks.ts" #s(virtual-comment-buffer-data "lsp-rocks.ts" (#s(virtual-comment-unit 3627 "error" "        await client.start();
-"))) "lsp-rocks.el" #s(virtual-comment-buffer-data "lsp-rocks.el" (#s(virtual-comment-unit 34134 "store request id" "      (puthash cmd id lsp-rocks--recent-requests)
+"))) "lsp-rocks.el" #s(virtual-comment-buffer-data "lsp-rocks.el" (#s(virtual-comment-unit 6837 "if only check for id then it's an overkill" "    (when (string= id (gethash cmd lsp-rocks--recent-requests))
+") #s(virtual-comment-unit 6918 "return an elisp variable's value to ts server
+GetVar | lsp-rocks.ts:13" "        (\"get_var\" (lsp-rocks--response id cmd (list :value (symbol-value (intern (plist-get params :name))))))
+") #s(virtual-comment-unit 34134 "store request id" "      (puthash cmd id lsp-rocks--recent-requests)
 "))) "client.ts" #s(virtual-comment-buffer-data "client.ts" (#s(virtual-comment-unit 11084 "error" "      this.error(`${this._name} client: couldn't create connection to server.`, error);
 ")))))
