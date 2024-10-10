@@ -17,7 +17,9 @@ fix ts error
 npm run build
 chmod +x ./lib/cli.js
 reate a py file, switch to python-mode from ts
+
 enable lsp-rock mode
+enable company-mode for completion
 
 error 
 #+begin_src 
