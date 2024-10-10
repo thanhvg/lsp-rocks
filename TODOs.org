@@ -3,6 +3,9 @@
 :END:
 * install
 #+begin_src elisp
+(use-package websocket
+  :load-path "~/git/emacs-websocket")
+
 (use-package lsp-rocks
   :load-path "~/git/lsp-rocks")
 #+end_src
