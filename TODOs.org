@@ -14,8 +14,7 @@
 : t
 
 fix ts error
-npm build
-
+npm run build
 chmod +x ./lib/cli.js
 reate a py file, switch to python-mode from ts
 enable lsp-rock mode
@@ -66,3 +65,50 @@ ResponseError: Client is not running
 }
 #+end_src
 * interact with the websocket ts client
+* in the protocol there is no mention of async communication
+the impression is that the response comes back right away
+
+the idea of using request id to make communication between emacs and lsp manager completely async that was first seen in lsp-bridge is the invention outside of lsp protocol. This project also adopted this idea.
+
+can lps-mode do the same? can it create new emacs process to handle this heavy work?
+
+no actually lsp-mode also features this idea
+https://github.com/emacs-lsp/lsp-mode/blob/master/lsp-mode.el#L3547
+             (id (cl-incf lsp-last-id))
+* add symbol highlight 
+what it the message?
+
+textDocument/documentHighlight
+
+what is the response, async or not,
+** error when no feature handle
+
+receive message => id: 93wbegzf, cmd: textDocument/documentHighlight, params: {"position":{"line":12,"character":1},"textDocument":{"uri":"file:///home/thanh/git/lsp-rocks/foo.py"}}
+TypeError: Cannot read properties of undefined (reading 'run')
+    at LanguageClient.on (/home/thanh/git/lsp-rocks/lib/client.js:425:49)
+    at LspRocks.messageHandler (/home/thanh/git/lsp-rocks/lib/lsp-rocks.js:70:37)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async WebSocket.<anonymous> (/home/thanh/git/lsp-rocks/lib/lsp-rocks.js:43:17)
+
+* must implement feature and register it here 
+
+[[file:~/git/lsp-rocks/client.ts::this.registerFeature(new HoverFeature(this));]]
+
+follow the hover as guidance
+* use lsp highlight on the
+
+yay highlight: 
+((:kind 2 :range (:start (:line 2 :character 4) :end (:line 2 :character 7)))
+ (:kind 2 :range (:start (:line 5 :character 0) :end (:line 5 :character 3)))
+ (:kind 2 :range (:start (:line 7 :character 0) :end (:line 7 :character 3)))
+ (:kind 2 :range (:start (:line 9 :character 0) :end (:line 9 :character 3)))
+ (:kind 2 :range (:start (:line 10 :character 0) :end (:line 10 :character 3)))
+ (:kind 2 :range (:start (:line 11 :character 0) :end (:line 11 :character 3))))
+
+lsp--document-highlight-callback
+
+* we need a hook that get called when the symbole at point changes
+lsp-mode use idle call 
+
+perhaps symbol highlight can be an inspiration
+

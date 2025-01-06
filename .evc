@@ -1,7 +1,10 @@
-#s(hash-table size 65 test equal rehash-size 1.5 rehash-threshold 0.8125 data ("lsp-rocks.ts" #s(virtual-comment-buffer-data "lsp-rocks.ts" (#s(virtual-comment-unit 3627 "error" "        await client.start();
+#s(hash-table test equal data ("lsp-rocks.ts" #s(virtual-comment-buffer-data "lsp-rocks.ts" (#s(virtual-comment-unit 3627 "error" "        await client.start();
 "))) "lsp-rocks.el" #s(virtual-comment-buffer-data "lsp-rocks.el" (#s(virtual-comment-unit 6837 "if only check for id then it's an overkill" "    (when (string= id (gethash cmd lsp-rocks--recent-requests))
 ") #s(virtual-comment-unit 6918 "return an elisp variable's value to ts server
 GetVar | lsp-rocks.ts:13" "        (\"get_var\" (lsp-rocks--response id cmd (list :value (symbol-value (intern (plist-get params :name))))))
-") #s(virtual-comment-unit 34134 "store request id" "      (puthash cmd id lsp-rocks--recent-requests)
-"))) "client.ts" #s(virtual-comment-buffer-data "client.ts" (#s(virtual-comment-unit 11084 "error" "      this.error(`${this._name} client: couldn't create connection to server.`, error);
+") #s(virtual-comment-unit 7906 "((:kind 2 :range (:start (:line 2 :character 4) :end (:line 2 :character 7))) (:kind 2 :range (:start (:line 5 :character 0) :end (:line 5 :character 3))) (:kind 2 :range (:start (:line 7 :character 0) :end (:line 7 :character 3))) (:kind 2 :range (:start (:line 9 :character 0) :end (:line 9 :character 3))) (:kind 2 :range (:start (:line 10 :character 0) :end (:line 10 :character 3))) (:kind 2 :range (:start (:line 11 :character 0) :end (:line 11 :character 3))))" "        (\"textDocument/documentHighlight\" (message (format \"yay highlight: %s\" data)))))))
+") #s(virtual-comment-unit 34343 "store request id" "      (puthash cmd id lsp-rocks--recent-requests)
+"))) "client.ts" #s(virtual-comment-buffer-data "client.ts" (#s(virtual-comment-unit 11142 "error" "      this.error(`${this._name} client: couldn't create connection to server.`, error);
+") #s(virtual-comment-unit 21415 "should log out unknow events instead of NPE" "    return (this._dynamicFeatures.get(method) as RunnableDynamicFeature<any, any, any, any>).run(params)
+"))) "features/hover.ts" #s(virtual-comment-buffer-data "features/highlight.ts" (#s(virtual-comment-unit 1000 "why put a bag here? it's C thinking" "    return this.parseHoverContens(resp.contents, []);
 ")))))

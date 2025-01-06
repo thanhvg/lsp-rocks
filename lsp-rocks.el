@@ -225,7 +225,7 @@ This set of allowed chars is enough for hexifying local file paths.")
         ("textDocument/signatureHelp" (lsp-rocks--process-signature-help data))
         ("textDocument/prepareRename" (lsp-rocks--process-prepare-rename data))
         ("textDocument/rename" (lsp-rocks--process-rename data))
-        ))))
+        ("textDocument/documentHighlight" (lsp--document-highlight-callback data))))))
 
 (defun lsp-rocks--create-websocket-client (url)
   "Create a websocket client that connects to URL."
@@ -471,6 +471,10 @@ File paths with spaces are only supported inside strings."
   "Display the type signature and documentation of the thing at point."
   (interactive)
   (lsp-rocks--request "textDocument/hover" (lsp-rocks--TextDocumentPosition)))
+
+(defun lsp-rocks--symbol-highlight ()
+  (lsp-rocks--request "textDocument/documentHighlight" (lsp-rocks--TextDocumentPosition)))
+
 
 (defun lsp-rocks--signature-help (isRetrigger kind triggerCharacter)
   "Send signatureHelp request with params."
@@ -918,7 +922,24 @@ Doubles as an indicator of snippet support."
   (setq lsp-rocks-mode nil)
   (lsp-rocks--did-close))
 
+
+
+;; hook on symbole changed
+
+(defvar-local lsp-rocks--last-symbol-at-point nil
+  "The last symbol at point.")
+
+(defun lsp-rocks--check-symbol-at-point ()
+  "Check if the symbol at point has changed."
+  (let ((current-symbol (thing-at-point 'symbol)))
+    (when (and current-symbol
+               (not (string= current-symbol lsp-rocks--last-symbol-at-point)))
+      (setq lsp-rocks--last-symbol-at-point current-symbol)
+      (lsp-rocks--symbol-highlight))))
+
+
 (defun lsp-rocks--post-command-hook ()
+  (lsp-rocks--check-symbol-at-point)
   (let ((this-command-string (format "%s" this-command)))
 
     (unless (member this-command-string '("self-insert-command" "company-complete-selection" "yas-next-field-or-maybe-expand"))

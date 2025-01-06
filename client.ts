@@ -29,6 +29,7 @@ import { TypeDefinitionFeature } from './features/typeDefinition';
 import { HoverFeature } from './features/hover';
 import { SignatureHelpFeature } from './features/signatureHelp';
 import { PrepareRenameFeature, RenameFeature } from './features/rename';
+import { DocumentHighLight } from './features/highlight';
 
 
 enum ClientState {
@@ -372,6 +373,7 @@ export class LanguageClient {
     this.registerFeature(new ReferencesFeature(this));
     this.registerFeature(new ImplementationFeature(this));
     this.registerFeature(new HoverFeature(this));
+    this.registerFeature(new DocumentHighLight(this));
     this.registerFeature(new SignatureHelpFeature(this));
     this.registerFeature(new RenameFeature(this));
     this.registerFeature(new PrepareRenameFeature(this));
