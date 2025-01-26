@@ -924,7 +924,7 @@ Doubles as an indicator of snippet support."
 
 
 
-;; hook on symbole changed
+;; hook on symbol changed
 
 (defvar-local lsp-rocks--last-symbol-at-point nil
   "The last symbol at point.")

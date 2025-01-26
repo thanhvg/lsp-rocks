@@ -22,6 +22,14 @@ enable lsp-rock mode
 enable company-mode for completion
 
 error 
+
+to restart the sever
+
+lsp-rocks-shutdown
+npm run build
+
+then start over
+
 #+begin_src 
 
 receive message => id: ekuzbwon, cmd: init, params: {"project":"/home/thanh/git/lsp-rocks/","language":"python","command":"pyright-langserver","args":["--stdio"],"clientInfo":{"name":"Emacs","version":"GNU Emacs 29.1.50 (build 2, x86_64-pc-linux-gnu, GTK+ Version 3.24.33, cairo version 1.16.0)\n of 2023-08-10"}}
@@ -114,3 +122,4 @@ lsp-mode use idle call
 
 perhaps symbol highlight can be an inspiration
 
+* impement lsp code actions 

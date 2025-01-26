@@ -66,7 +66,6 @@ if __name__ == "__main__":
     response = client.receive_response()
     print("Initialize Response:", response)
 
-
     # Example request to shutdown the LSP server
     client.send_request('shutdown', {})
     response = client.receive_response()
