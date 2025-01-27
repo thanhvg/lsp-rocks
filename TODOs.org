@@ -121,5 +121,16 @@ lsp--document-highlight-callback
 lsp-mode use idle call 
 
 perhaps symbol highlight can be an inspiration
+* what is the next feature? 
+https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#workspace_willRenameFiles
+
+workspace/willRenameFiles 
+
+[[file:protocol.org::*\[\[https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#workspace_willRenameFiles\]\[WillRenameFiles Request (((https://github.githubassets.com/images/icons/emoji/unicode/21a9.png)))\]\]][WillRenameFiles Request (((https://github.githubassets.com/images/icons/emoji/unicode/21a9.png)))]]
+
+example
+[[file:~/git/lsp-mode/lsp-mode.el::defun lsp--on-rename-file (old-func old-name new-name &optional ok-if-already-exists?]]
+
+* call hierarchy, super type and sub type
 
 * impement lsp code actions 
