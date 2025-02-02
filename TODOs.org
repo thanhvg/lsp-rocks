@@ -117,9 +117,12 @@ yay highlight:
 
 lsp--document-highlight-callback
 
-* we need a hook that get called when the symbole at point changes
+* we need a hook that get called when the symbol at point changes
 lsp-mode use idle call 
 
 perhaps symbol highlight can be an inspiration
 
 * impement lsp code actions 
+look at [[file:~/git/lsp-mode/lsp-mode.el::lsp-defun lsp-execute-code-action ((action &as &CodeAction :command? :edit?)][lsp-mode]]
+- get code action at point
+- execute it

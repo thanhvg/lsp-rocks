@@ -475,6 +475,15 @@ File paths with spaces are only supported inside strings."
 (defun lsp-rocks--symbol-highlight ()
   (lsp-rocks--request "textDocument/documentHighlight" (lsp-rocks--TextDocumentPosition)))
 
+(defun lsp-rocks-code-actions-at-point (&optional kind)
+  "Retrieve the code actions for the active region or the current line.
+It will filter by KIND if non nil."
+  (lsp-request "textDocument/codeAction" (lsp--text-document-code-action-params kind)))
+
+
+(defun lsp-rocks-execute-code-action ()
+  "Show a list of actions at point and then execute the select one.")
+
 
 (defun lsp-rocks--signature-help (isRetrigger kind triggerCharacter)
   "Send signatureHelp request with params."
