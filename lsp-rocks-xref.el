@@ -120,14 +120,14 @@ When only one definition found, jump to it right away instead."
       buf))))
 
 (defun xref--show-xrefs (xrefs display-action &optional _always-show-list)
-  (xref--push-markers)
+  ;; (xref--push-markers)
   (funcall xref-show-xrefs-function xrefs
            `((window . ,(selected-window))
              (display-action . ,display-action)
              (auto-jump . ,xref-auto-jump-to-first-xref))))
 
 (defun xref--show-defs (xrefs display-action)
-  (xref--push-markers)
+  ;; (xref--push-markers)
   (funcall xref-show-definitions-function xrefs
            `((window . ,(selected-window))
              (display-action . ,display-action)
