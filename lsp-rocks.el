@@ -225,7 +225,8 @@ This set of allowed chars is enough for hexifying local file paths.")
         ("textDocument/signatureHelp" (lsp-rocks--process-signature-help data))
         ("textDocument/prepareRename" (lsp-rocks--process-prepare-rename data))
         ("textDocument/rename" (lsp-rocks--process-rename data))
-        ("textDocument/documentHighlight" (lsp--document-highlight-callback data))))))
+        ("textDocument/documentHighlight" (lsp--document-highlight-callback data))
+        ("textDocument/codeAction" (message "thanh: %s" data))))))
 
 (defun lsp-rocks--create-websocket-client (url)
   "Create a websocket client that connects to URL."
@@ -478,8 +479,7 @@ File paths with spaces are only supported inside strings."
 (defun lsp-rocks-code-actions-at-point (&optional kind)
   "Retrieve the code actions for the active region or the current line.
 It will filter by KIND if non nil."
-  (lsp-request "textDocument/codeAction" (lsp--text-document-code-action-params kind)))
-
+  (lsp-rocks--request "textDocument/codeAction" (lsp--text-document-code-action-params kind)))
 
 (defun lsp-rocks-execute-code-action ()
   "Show a list of actions at point and then execute the select one.")
