@@ -226,7 +226,7 @@ This set of allowed chars is enough for hexifying local file paths.")
         ("textDocument/prepareRename" (lsp-rocks--process-prepare-rename data))
         ("textDocument/rename" (lsp-rocks--process-rename data))
         ("textDocument/documentHighlight" (lsp--document-highlight-callback data))
-        ("textDocument/codeAction" (message "thanh: %s" data))))))
+        ("textDocument/codeAction" (lsp-rocks--process-code-actions data))))))
 
 (defun lsp-rocks--create-websocket-client (url)
   "Create a websocket client that connects to URL."
@@ -476,13 +476,65 @@ File paths with spaces are only supported inside strings."
 (defun lsp-rocks--symbol-highlight ()
   (lsp-rocks--request "textDocument/documentHighlight" (lsp-rocks--TextDocumentPosition)))
 
-(defun lsp-rocks-code-actions-at-point (&optional kind)
-  "Retrieve the code actions for the active region or the current line.
-It will filter by KIND if non nil."
-  (lsp-rocks--request "textDocument/codeAction" (lsp--text-document-code-action-params kind)))
 
-(defun lsp-rocks-execute-code-action ()
-  "Show a list of actions at point and then execute the select one.")
+(defun lsp-rocks-code-actions-at-point (&optional kind)
+  (interactive)
+ (lsp-rocks--request "textDocument/codeAction" (lsp--text-document-code-action-params )))
+
+(defun lsp-rocks-code-actions-at-point (&optional kind)
+  "Request code actions at point.
+If optional KIND is provided, only return code actions of this kind."
+  (interactive)
+  (lsp-rocks--request "textDocument/codeAction"
+                     (list 
+                           :textDocument
+                           (list :uri (lsp-rocks--buffer-uri))
+                           :range (if (use-region-p)
+                                      (list :start (lsp-rocks--point-position (region-beginning)) :end (lsp-rocks--point-position (region-end)))
+                                   (let ((loc (lsp-rocks--point-position (point))))
+                                     (list :start loc :end loc)))
+                           :context `(:diagnostics []  ; TODO: Add diagnostics when available
+                                      ,@(when nil (list :only (vector nil)))))))
+
+(defun lsp-rocks--process-code-actions (actions)
+  "Process and display code ACTIONS from the language server."
+  (message "got actions: %s" actions)
+  (when actions
+    (let ((action-names (mapcar (lambda (a) 
+                                 (or (plist-get a :title) 
+                                     (plist-get (plist-get a :command) :title))) 
+                               actions)))
+      (let ((selected (completing-read "Code action: " action-names nil t)))
+        (when selected
+          (let ((action (seq-find (lambda (a) 
+                                   (string= selected 
+                                            (or (plist-get a :title)
+                                                (plist-get (plist-get a :command) :title))))
+                                 actions)))
+            (when action
+              (if (plist-get action :edit)
+                  (lsp-rocks--apply-workspace-edit (plist-get action :edit))
+                (when-let ((command (plist-get action :command)))
+                  (lsp-rocks--execute-command command))))))))))
+
+(defun lsp-rocks--apply-workspace-edit (edit)
+  "Apply the workspace EDIT from a code action."
+  (let ((changes (plist-get edit :documentChanges)))
+    (dolist (change changes)
+      (let* ((text-doc (plist-get change :textDocument))
+        (when-let ((uri (plist-get text-doc :uri))
+                   (file (lsp-rocks--uri-to-path uri)))
+          (with-current-buffer (find-file-noselect file)
+            (dolist (edit (plist-get change :edits))
+              (let ((range (plist-get edit :range))
+                (delete-region (lsp-rocks--lsp-position-to-point (plist-get range :start))
+                               (lsp-rocks--lsp-position-to-point (plist-get range :end)))
+                (goto-char (lsp-rocks--lsp-position-to-point (plist-get range :start)))
+                (insert (plist-get edit :newText))))))))))))
+
+(defun lsp-rocks--execute-command (command)
+  "Execute LSP COMMAND from a code action."
+  (lsp-rocks--request "workspace/executeCommand" command))
 
 
 (defun lsp-rocks--signature-help (isRetrigger kind triggerCharacter)
