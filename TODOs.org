@@ -148,6 +148,86 @@ receive message => id: 3nj1kq08, cmd: textDocument/codeAction, params: {"textDoc
   that the client knows, it can send to emacs or it can figure out by its own
 
 
+((:title Change signature for 'foo' :command java.action.applyRefactoringCommand :arguments (changeSignature (:textDocument (:uri file:///home/thanh/git/javapg/app/src/main/java/javapg/App.java) :range (:start (:line 38 :character 21) :end (:line 38 :character 21)) :context (:diagnostics nil)) (:methodIdentifier =app/src\/main\/java=/gradle_scope=/main=/=/gradle_used_by_scope=/main,test=/<javapg{App.java[App~foo~QString; :modifier public :returnType void :methodName foo :parameters ((:type String :name bar :defaultValue  :originalIndex 0)) :exceptions nil))) (:title Inline Method :command java.apply.workspaceEdit :arguments ((:changes nil :documentChanges ((:textDocument (:version :null :uri file:///home/thanh/git/javapg/app/src/main/java/javapg/App.java) :edits ((:range (:start (:line 36 :character 3) :end (:line 40 :character 3)) :newText ))))))) (:title Add Javadoc comment :command java.apply.workspaceEdit :arguments ((:changes nil :documentChanges ((:textDocument (:version :null :uri file:///home/thanh/git/javapg/app/src/main/java/javapg/App.java) :edits ((:range (:start (:line 38 :character 2) :end (:line 38 :character 2)) :newText /**
+ * @param bar
+ */
+))))))) (:title Organize imports :command java.apply.workspaceEdit :arguments ((:changes (:file:///home/thanh/git/javapg/app/src/main/java/javapg/App.java ((:range (:start (:line 5 :character 0) :end (:line 6 :character 0)) :newText )))))) (:title Generate Getters and Setters :command java.apply.workspaceEdit :arguments ((:changes (:file:///home/thanh/git/javapg/app/src/main/java/javapg/App.java ((:range (:start (:line 40 :character 3) :end (:line 40 :character 3)) :newText 
+
+public String getBar() {
+	return bar;
+}
+
+public void setBar(String bar) {
+	this.bar = bar;
+})))))) (:title Generate Getters :command java.apply.workspaceEdit :arguments ((:changes (:file:///home/thanh/git/javapg/app/src/main/java/javapg/App.java ((:range (:start (:line 40 :character 3) :end (:line 40 :character 3)) :newText 
+
+public String getBar() {
+	return bar;
+})))))) (:title Generate Setters :command java.apply.workspaceEdit :arguments ((:changes (:file:///home/thanh/git/javapg/app/src/main/java/javapg/App.java ((:range (:start (:line 40 :character 3) :end (:line 40 :character 3)) :newText 
+
+public void setBar(String bar) {
+	this.bar = bar;
+})))))) (:title Change modifiers to final where possible :command java.apply.workspaceEdit :arguments ((:changes nil :documentChanges ((:textDocument (:version :null :uri file:///home/thanh/git/javapg/app/src/main/java/javapg/App.java) :edits ((:range (:start (:line 11 :character 4) :end (:line 38 :character 25)) :newText final String me = "foo";
+
+    return "Hello World!";
+
+  }
+
+  sealed interface Option {
+    record Name(String name) implements Option {
+    }
+  }
+
+  String bar;
+
+  static Set<Option> parseOptions(final String[] args) {
+    final var foo = new Object();
+    for (final String arg : args) {
+
+      arg.chars().map(null);
+    }
+    return null;
+  }
+
+  public static void main(final String[] args) {
+    System.out.println(args.length);
+    // System.out.println(new App().getGreeting(1, 2));
+  }
+
+  public static void foo(final ))))))) (:title Sort Members for 'App.java' :command java.apply.workspaceEdit :arguments ((:changes (:file:///home/thanh/git/javapg/app/src/main/java/javapg/App.java ((:range (:start (:line 9 :character 2) :end (:line 40 :character 3)) :newText sealed interface Option {
+    record Name(String name) implements Option {
+    }
+  }
+
+  public static void main(String[] args) {
+    System.out.println(args.length);
+    // System.out.println(new App().getGreeting(1, 2));
+  }
+
+  public static void foo(String bar) {
+    System.out.print(bar);
+  }
+
+  static Set<Option> parseOptions(String[] args) {
+    var foo = new Object();
+    for (String arg : args) {
+
+      arg.chars().map(null);
+    }
+    return null;
+  }
+
+  String bar;
+
+  public String getGreeting() {
+
+    String me = "foo";
+
+    return "Hello World!";
+
+  })))))))
+
+
 * TODO use original xref
 currently xref is modified[[ file:lsp-rocks-xref.el]] and it breaks better to have a workaround
 
