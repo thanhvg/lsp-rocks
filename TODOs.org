@@ -154,3 +154,122 @@ currently xref is modified[[ file:lsp-rocks-xref.el]] and it breaks better to ha
 xref is defined by some generic method
 
 implementation declare of their backend and set it in xref-backend-functions 
+* actions
+
+((:title Change signature for 'parseOptions' :command java.action.applyRefactoringCommand :arguments (changeSignature (:textDocument (:uri file:///home/thanh/git/javapg/app/src/main/java/javapg/App.java) :range (:start (:line 24 :character 30) :end (:line 24 :character 30)) :context (:diagnostics nil)) (:methodIdentifier =app/src\/main\/java=/gradle_scope=/main=/=/gradle_used_by_scope=/main,test=/<javapg{App.java[App~parseOptions~\[QString; :modifier  :returnType Set<Option> :methodName parseOptions :parameters ((:type String[] :name args :defaultValue  :originalIndex 0)) :exceptions nil))) (:title Inline Method :command java.apply.workspaceEdit :arguments ((:changes nil :documentChanges ((:textDocument (:version :null :uri file:///home/thanh/git/javapg/app/src/main/java/javapg/App.java) :edits ((:range (:start (:line 24 :character 2) :end (:line 33 :character 2)) :newText ))))))) (:title Add Javadoc for 'parseOptions' :command java.apply.workspaceEdit :arguments ((:changes nil :documentChanges ((:textDocument (:version :null :uri file:///home/thanh/git/javapg/app/src/main/java/javapg/App.java) :edits ((:range (:start (:line 24 :character 2) :end (:line 24 :character 2)) :newText /**
+ * @param args
+ * @return
+ */
+))))))) (:title Organize imports :command java.apply.workspaceEdit :arguments ((:changes (:file:///home/thanh/git/javapg/app/src/main/java/javapg/App.java ((:range (:start (:line 5 :character 0) :end (:line 8 :character 38)) :newText import java.util.Set;)))))) (:title Generate Getters and Setters :command java.apply.workspaceEdit :arguments ((:changes (:file:///home/thanh/git/javapg/app/src/main/java/javapg/App.java ((:range (:start (:line 33 :character 2) :end (:line 33 :character 2)) :newText public String getBar() {
+	return bar;
+}
+
+public void setBar(String bar) {
+	this.bar = bar;
+}
+
+)))))) (:title Generate Getters :command java.apply.workspaceEdit :arguments ((:changes (:file:///home/thanh/git/javapg/app/src/main/java/javapg/App.java ((:range (:start (:line 33 :character 2) :end (:line 33 :character 2)) :newText public String getBar() {
+	return bar;
+}
+
+)))))) (:title Generate Setters :command java.apply.workspaceEdit :arguments ((:changes (:file:///home/thanh/git/javapg/app/src/main/java/javapg/App.java ((:range (:start (:line 33 :character 2) :end (:line 33 :character 2)) :newText public void setBar(String bar) {
+	this.bar = bar;
+}
+
+)))))) (:title Change modifiers to final where possible :command java.apply.workspaceEdit :arguments ((:changes nil :documentChanges ((:textDocument (:version :null :uri file:///home/thanh/git/javapg/app/src/main/java/javapg/App.java) :edits ((:range (:start (:line 12 :character 4) :end (:line 39 :character 25)) :newText final String me = "foo";
+
+    return "Hello World!";
+  }
+
+  sealed interface Option {
+    record Name(String name) implements Option {
+    }
+  }
+
+  String bar;
+
+  static Set<Option> parseOptions(final String[] args) {
+    final var foo = new Object();
+    for (final String arg : args) {
+
+      arg.chars().map(null);
+    }
+    return null;
+  }
+
+  public static void main(final String[] args) {
+    System.out.println(args.length);
+
+    // System.out.println(new App().getGreeting(1, 2));
+  }
+
+  public static void foo(final ))))))) (:title Sort Members for 'App.java' :command java.apply.workspaceEdit :arguments ((:changes (:file:///home/thanh/git/javapg/app/src/main/java/javapg/App.java ((:range (:start (:line 11 :character 2) :end (:line 41 :character 3)) :newText sealed interface Option {
+    record Name(String name) implements Option {
+    }
+  }
+
+  public static void main(String[] args) {
+    System.out.println(args.length);
+
+    // System.out.println(new App().getGreeting(1, 2));
+  }
+
+  public static void foo(String bar) {
+    System.out.print(bar);
+  }
+
+  static Set<Option> parseOptions(String[] args) {
+    var foo = new Object();
+    for (String arg : args) {
+
+      arg.chars().map(null);
+    }
+    return null;
+  }
+
+  String bar;
+
+  public String getGreeting() {
+    String me = "foo";
+
+    return "Hello World!";
+  })))))))
+* actions
+;; Command
+(:title Generate Getters and Setters :command java.apply.workspaceEdit
+        :arguments ((:changes
+                     (:file:///home/thanh/git/javapg/app/src/main/java/javapg/App.java
+                      ((:range
+                        (:start (:line 33 :character 2) :end
+                                (:line 33 :character 2))
+                        :newText public String getBar() {
+	return bar;
+}
+
+public void setBar(String bar) {
+	this.bar = bar;
+}
+
+))))))
+(:title Generate Getters :command java.apply.workspaceEdit :arguments ((:changes
+                                                                        (:file:///home/thanh/git/javapg/app/src/main/java/javapg/App.java
+                                                                         ((:range
+                                                                           (:start
+                                                                            (:line
+                                                                             33
+                                                                             :character
+                                                                             2)
+                                                                            :end
+                                                                            (:line
+                                                                             33
+                                                                             :character
+                                                                             2))
+                                                                           :newText
+                                                                           public
+                                                                           String
+                                                                           getBar()
+                                                                           {
+	return bar;
+}
+
+))))))

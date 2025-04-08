@@ -476,29 +476,28 @@ File paths with spaces are only supported inside strings."
 (defun lsp-rocks--symbol-highlight ()
   (lsp-rocks--request "textDocument/documentHighlight" (lsp-rocks--TextDocumentPosition)))
 
-
-(defun lsp-rocks-code-actions-at-point (&optional kind)
-  (interactive)
- (lsp-rocks--request "textDocument/codeAction" (lsp--text-document-code-action-params )))
+;; (defun lsp-rocks-code-actions-at-point (&optional kind)
+;;   (interactive)
+;;   (lsp-rocks--request "textDocument/codeAction" (lsp--text-document-code-action-params )))
 
 (defun lsp-rocks-code-actions-at-point (&optional kind)
   "Request code actions at point.
 If optional KIND is provided, only return code actions of this kind."
   (interactive)
   (lsp-rocks--request "textDocument/codeAction"
-                     (list 
-                           :textDocument
-                           (list :uri (lsp-rocks--buffer-uri))
-                           :range (if (use-region-p)
-                                      (list :start (lsp-rocks--point-position (region-beginning)) :end (lsp-rocks--point-position (region-end)))
-                                   (let ((loc (lsp-rocks--point-position (point))))
-                                     (list :start loc :end loc)))
-                           :context `(:diagnostics []  ; TODO: Add diagnostics when available
-                                      ,@(when nil (list :only (vector nil)))))))
+                      (list :textDocument
+                            (list :uri (lsp-rocks--buffer-uri))
+                            :range (if (use-region-p)
+                                       (list :start (lsp-rocks--point-position (region-beginning)) :end (lsp-rocks--point-position (region-end)))
+                                     (let ((loc (lsp-rocks--point-position (point))))
+                                       (list :start loc :end loc)))
+                            :context `(:diagnostics []  ; TODO: Add diagnostics when available
+                                                    ,@(when kind (list :only (vector kind)))))))
 
 (defun lsp-rocks--process-code-actions (actions)
   "Process and display code ACTIONS from the language server."
-  (message "got actions: %s" actions)
+  ;; (message "got actions: %s" actions)
+  ;; (message "thanh")
   (when actions
     (let ((action-names (mapcar (lambda (a) 
                                  (or (plist-get a :title) 
@@ -513,9 +512,10 @@ If optional KIND is provided, only return code actions of this kind."
                                  actions)))
             (when action
               (if (plist-get action :edit)
-                  (lsp-rocks--apply-workspace-edit (plist-get action :edit))
-                (when-let ((command (plist-get action :command)))
-                  (lsp-rocks--execute-command command))))))))))
+                  (lsp-rocks--apply-workspace-edit (plist-get action :edit)))
+              (when-let ((command (plist-get action :command)))
+                ;; (message "doing actions: %s" command)
+                (lsp-rocks--execute-command command (plist-get action :arguments))))))))))
 
 (defun lsp-rocks--apply-workspace-edit (edit)
   "Apply the workspace EDIT from a code action."
@@ -532,9 +532,12 @@ If optional KIND is provided, only return code actions of this kind."
                 (goto-char (lsp-rocks--lsp-position-to-point (plist-get range :start)))
                 (insert (plist-get edit :newText))))))))))))
 
-(defun lsp-rocks--execute-command (command)
+(defun lsp-rocks--execute-command (command &optional args)
   "Execute LSP COMMAND from a code action."
-  (lsp-rocks--request "workspace/executeCommand" command))
+  (message "thanh %s" args)
+  (lsp-rocks--request "workspace/executeCommand" (if args
+                                                     (list :command command :arguments args)
+                                                   (list :command command))))
 
 
 (defun lsp-rocks--signature-help (isRetrigger kind triggerCharacter)
@@ -901,11 +904,11 @@ Doubles as an indicator of snippet support."
 
 (defun lsp-rocks--json-parse (json)
   "Parse JSON data to `plist'."
-  (json-parse-string json :object-type 'plist :array-type 'list))
+  (json-parse-string json :object-type 'plist :array-type 'array))
 
 (defun lsp-rocks--json-stringify (object)
   "Stringify OBJECT data to JSON."
-  (json-serialize object :null-object nil))
+  (json-serialize object :null-object nil :false-object :json-false))
 
 (defun lsp-rocks--request (cmd &optional params)
   "Send a websocket message with given CMD and PARAMS."
