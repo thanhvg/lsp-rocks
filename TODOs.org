@@ -353,3 +353,19 @@ public void setBar(String bar) {
 }
 
 ))))))
+* completion
+error occured:
+
+(wrong-type-argument listp [(:label client :kind 6 :data (:workspacePath /home/thanh/git/lsp-rocks :filePath /home/thanh/git/lsp-rocks/foo.py :position (:line 66 :character 10) :symbolLabel client) :sortText 05.0000.client :documentation (:kind markdown :value ```python
+client: LSPClient
+```))])
+
+
+[(:label client :kind 6 :data
+         (:workspacePath /home/thanh/git/lsp-rocks :filePath
+                         /home/thanh/git/lsp-rocks/foo.py :position
+                         (:line 66 :character 10) :symbolLabel client)
+         :sortText 05.0000.client :documentation (:kind markdown :value
+                                                        ```python
+client: LSPClient
+```))]

@@ -644,21 +644,20 @@ relied upon."
 
 (defun lsp-rocks--parse-completion (completions)
   "Parse LPS server returned COMPLETIONS."
-  (let* ((head (car completions))
-         (tail (cdr completions))
-         (head-label (plist-get head :label)))
-    (put-text-property 0 1 'kind (plist-get head :kind) head-label)
-    (put-text-property 0 1 'detail (plist-get head :detail) head-label)
-    (put-text-property 0 1 'resolved-item head head-label)
-    (cons head-label
-          (cl-mapcar (lambda (it)
-                       (let* ((ret (plist-get it :label))
-                              (kind (plist-get it :kind))
-                              (detail (plist-get it :detail)))
-                         (put-text-property 0 1 'kind kind ret)
-                         (put-text-property 0 1 'detail detail ret)
-                         ret))
-                     tail))))
+  (seq-let [head &rest tail] completions
+    (let ((head-label (plist-get head :label)))
+      (put-text-property 0 1 'kind (plist-get head :kind) head-label)
+      (put-text-property 0 1 'detail (plist-get head :detail) head-label)
+      (put-text-property 0 1 'resolved-item head head-label)
+      (cons head-label
+            (cl-mapcar (lambda (it)
+                         (let* ((ret (plist-get it :label))
+                                (kind (plist-get it :kind))
+                                (detail (plist-get it :detail)))
+                           (put-text-property 0 1 'kind kind ret)
+                           (put-text-property 0 1 'detail detail ret)
+                           ret))
+                       tail)))))
 
 (defun lsp-rocks--lsp-position-to-point (pos-plist &optional marker)
   "Convert LSP position POS-PLIST to Emacs point.
