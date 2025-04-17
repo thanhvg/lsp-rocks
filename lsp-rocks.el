@@ -534,7 +534,7 @@ If optional KIND is provided, only return code actions of this kind."
 
 (defun lsp-rocks--execute-command (command &optional args)
   "Execute LSP COMMAND from a code action."
-  (message "thanh %s" args)
+  ;; (message "thanh %s" args)
   (lsp-rocks--request "workspace/executeCommand" (if args
                                                      (list :command command :arguments args)
                                                    (list :command command))))

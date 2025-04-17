@@ -369,3 +369,15 @@ client: LSPClient
                                                         ```python
 client: LSPClient
 ```))]
+
+* code action error
+[Error  - 7:03:37 a.m.] Sending request workspace/executeCommand failed.
+ResponseError: No delegateCommandHandler for java.apply.workspaceEdit
+    at handleResponse (/home/thanh/git/lsp-rocks/node_modules/vscode-jsonrpc/lib/common/connection.js:565:48)
+    at handleMessage (/home/thanh/git/lsp-rocks/node_modules/vscode-jsonrpc/lib/common/connection.js:345:13)
+    at processMessageQueue (/home/thanh/git/lsp-rocks/node_modules/vscode-jsonrpc/lib/common/connection.js:362:17)
+    at Immediate.<anonymous> (/home/thanh/git/lsp-rocks/node_modules/vscode-jsonrpc/lib/common/connection.js:334:13)
+    at process.processImmediate (node:internal/timers:491:21) {
+  code: -32601,
+  data: undefined
+}

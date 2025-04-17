@@ -31,6 +31,7 @@ import { SignatureHelpFeature } from './features/signatureHelp';
 import { PrepareRenameFeature, RenameFeature } from './features/rename';
 import { DocumentHighLight } from './features/highlight';
 import { CodeActionFeature } from './features/codeAction';
+import { ExecuteCommand } from './features/executeCommand';
 
 
 enum ClientState {
@@ -379,6 +380,7 @@ export class LanguageClient {
     this.registerFeature(new SignatureHelpFeature(this));
     this.registerFeature(new RenameFeature(this));
     this.registerFeature(new PrepareRenameFeature(this));
+    this.registerFeature(new ExecuteCommand(this));
   }
 
   protected fillInitializeParams(params: InitializeParams): void {
